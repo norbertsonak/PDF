@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Redirecting…</title>
+</head>
+<body>
+  <script>
+  (function() {
+    // 1) grab “user=” from the URL
+    const params = new URLSearchParams(window.location.search);
+    const user   = params.get('user') || 'anonymous';
+
+    // 2) fire your flow via POST (to log the click)
+    fetch(
+      'https://7b6c7d42c9ace3bd8cd22240470697.a6.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/f1e8b80e32624cba88ab1870b59a5bf4/triggers/manual/paths/invoke/?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=bE3IXhu-iJY49l0Y0JcT3ZDTrrkn84BeOQNyQKzfIC4',
+      {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ user })
+      }
+    )
+    .catch(() => {/* ignore errors */})
+    .finally(() => {
+      // 3) then do a real client-side redirect to the PDF
+      window.location.href = 
+        'https://norbertsonak.github.io/PDF/Lambes-New-Regional-Leadership.pdf';
+    });
+  })();
+  </script>
+
+  <p>
+    Redirecting… if you’re not automatically sent, 
+    <a id="pdfLink" href="https://norbertsonak.github.io/PDF/Lambes-New-Regional-Leadership.pdf">
+      click here
+    </a>.
+  </p>
+</body>
+</html>
